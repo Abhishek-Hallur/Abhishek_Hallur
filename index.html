@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Abhishek Hallur — Frontend Developer building beautiful, responsive web experiences with HTML, CSS and JavaScript.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>Abhishek Hallur — Frontend Developer</title>
+</head>
+
+<body>
+
+    <div id="scroll-progress"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Dual Background Time-Lapse Videos (Day & Night) for Seamless Crossfade -->
+    <div id="video-container" aria-hidden="true">
+        <video autoplay loop muted playsinline id="bg-video-dark" class="bg-video">
+            <source src="milky way.mp4" type="video/mp4">
+        </video>
+        <video autoplay loop muted playsinline id="bg-video-light" class="bg-video">
+            <source src="sky.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Floating audio widget with Animated EQ Bars -->
+    <div id="audio-widget" title="Toggle background music">
+        <button id="audio-btn" aria-label="Play / Pause music">
+            <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg id="icon-pause" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+        <span id="audio-label">Meridian Drift</span>
+        <div class="audio-bars" id="audio-bars" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+        </div>
+        <audio id="bg-audio" loop><source src="Meridian_Drift.mp3" type="audio/mpeg"></audio>
+    </div>
+
+    <!-- Back to top button with circular scroll progress -->
+    <button id="back-to-top" aria-label="Back to top" title="Back to top">
+        <svg class="progress-ring" width="46" height="46" viewBox="0 0 46 46">
+            <circle class="progress-ring-bg" cx="23" cy="23" r="19"></circle>
+            <circle class="progress-ring-circle" id="scroll-circle" cx="23" cy="23" r="19"></circle>
+        </svg>
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- NAV -->
+    <header class="header" id="header">
+        <nav id="navbar">
+            <a href="#home" class="nav-logo">Ab<span>hi</span>shek</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home"     class="nav-link"><i class="fa-solid fa-house"></i> Home</a></li>
+                <li><a href="#about"    class="nav-link"><i class="fa-solid fa-user"></i> About</a></li>
+                <li><a href="#skills"   class="nav-link"><i class="fa-solid fa-code"></i> Skills</a></li>
+                <li><a href="#projects" class="nav-link"><i class="fa-solid fa-folder-open"></i> Projects</a></li>
+                <li><a href="#contact"  class="nav-link"><i class="fa-solid fa-paper-plane"></i> Contact</a></li>
+            </ul>
+            <!-- Theme toggle -->
+            <button id="theme-toggle" aria-label="Toggle light/dark mode">
+                <span class="toggle-icon">🌙</span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- HERO -->
+        <section id="home" class="hero">
+            <div class="hero-inner">
+                <div class="hero-text">
+                    <div class="timelapse-badge" id="timelapse-pill" title="Toggle to experience Day or Night Time-Lapse">
+                        <span class="timelapse-dot"></span>
+                        <span class="timelapse-label">Sky: <span id="timelapse-mode-name">Night Stars</span></span>
+                        <button class="timelapse-btn" id="timelapse-toggle-btn" aria-label="Switch Time-Lapse">
+                            <i class="fa-solid fa-sun" id="timelapse-btn-icon"></i>
+                            <span id="timelapse-btn-text">Experience Day Sky</span>
+                        </button>
+                    </div>
+                    <p class="greeting">Hello, I'm</p>
+                    <h1>Abhishek <span class="accent-text">Hallur</span></h1>
+                    <p class="tagline">I craft <span class="role-rotator" id="role-rotator">interactive web experiences</span><span class="typing-cursor">|</span></p>
+                    <p class="hero-desc">I build simple, beautiful and responsive websites using HTML, CSS and JavaScript. I love turning ideas into interactive experiences.</p>
+                    <div class="hero-btns">
+                        <a href="#projects" class="btn btn-primary">View My Projects <i class="fa-solid fa-arrow-right" style="margin-left: 6px;"></i></a>
+                        <a href="#contact"  class="btn btn-outline"><i class="fa-regular fa-paper-plane" style="margin-right: 6px;"></i> Get In Touch</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="photo-ring" id="hero-photo-ring">
+                        <div class="photo-placeholder">
+                            <!-- Replace the SVG below with <img src="your-photo.jpg" alt="Abhishek Hallur"> when ready -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+                        </div>
+                        <div class="orbit orbit-1"></div>
+                        <div class="orbit orbit-2"></div>
+
+                        <!-- Floating Tech / Vibe Chips with Micro-Parallax -->
+                        <div class="floating-chip chip-1"><i class="fa-solid fa-bolt"></i> Fast &amp; Fluid</div>
+                        <div class="floating-chip chip-2"><i class="fa-solid fa-code"></i> Clean Code</div>
+                        <div class="floating-chip chip-3"><i class="fa-solid fa-wand-magic-sparkles"></i> Modern UI</div>
+                    </div>
+                    <p class="hero-aside">Better<br>Code<br>Bigger<br>Dreams</p>
+                </div>
+            </div>
+            <div class="scroll-hint">
+                <span>scroll</span>
+                <div class="scroll-line"><div class="scroll-dot"></div></div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about" class="section">
+            <div class="section-inner">
+                <p class="section-label"><i class="fa-solid fa-user-tie"></i> ABOUT ME</p>
+                <div class="about-grid">
+                    <div class="about-left reveal-el">
+                        <h2>A little about me</h2>
+                        <p>I'm Abhishek, a passionate web developer who enjoys learning new technologies and building useful things for the web. I'm currently focusing on improving my frontend skills and creating projects that make a difference.</p>
+                        <p class="about-meta">
+                            <i class="fa-solid fa-location-dot" style="color: var(--accent); margin-right: 4px;"></i>
+                            Based in India &nbsp;|&nbsp; Open to opportunities
+                        </p>
+                    </div>
+                    <div class="traits-grid reveal-el">
+                        <div class="trait-card">
+                            <div class="trait-icon">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <div><h4>Clean Code</h4><p>I write clean, readable and maintainable code.</p></div>
+                        </div>
+                        <div class="trait-card">
+                            <div class="trait-icon">
+                                <i class="fa-solid fa-lightbulb"></i>
+                            </div>
+                            <div><h4>Problem Solver</h4><p>I enjoy finding solutions to real-world problems.</p></div>
+                        </div>
+                        <div class="trait-card">
+                            <div class="trait-icon">
+                                <i class="fa-solid fa-rocket"></i>
+                            </div>
+                            <div><h4>Always Learning</h4><p>Exploring new tools and technologies every day.</p></div>
+                        </div>
+                        <div class="trait-card">
+                            <div class="trait-icon">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div><h4>Team Player</h4><p>I believe in collaboration and sharing knowledge.</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Quick Stats with Animated Counters -->
+                <div class="about-stats reveal-el">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-code"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-num-row"><span class="counter" data-target="100">0</span><span class="stat-unit">%</span></div>
+                            <p class="stat-label">Responsive Precision</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-laptop-code"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-num-row"><span class="counter" data-target="15">0</span><span class="stat-unit">+</span></div>
+                            <p class="stat-label">Projects &amp; Demos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-num-row"><span class="counter" data-target="365">0</span><span class="stat-unit">d</span></div>
+                            <p class="stat-label">Continuous Learning</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="stat-info">
+                            <div class="stat-num-row"><span class="counter" data-target="100">0</span><span class="stat-unit">%</span></div>
+                            <p class="stat-label">Clean Code Commitment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills" class="section">
+            <div class="section-inner">
+                <p class="section-label"><i class="fa-solid fa-laptop-code"></i> MY SKILLS</p>
+                <h2 class="reveal-el">Technologies I Work With</h2>
+                <div class="skills-grid reveal-el">
+
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <img src="https://cdn.simpleicons.org/html5" alt="HTML5">
+                        </div>
+                        <h4>HTML</h4><p>Structure the web</p>
+                    </div>
+
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <img src="https://cdn.simpleicons.org/css3" alt="CSS3">
+                        </div>
+                        <h4>CSS</h4><p>Style the web</p>
+                    </div>
+
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <img src="https://cdn.simpleicons.org/javascript" alt="JavaScript">
+                        </div>
+                        <h4>JavaScript</h4><p>Add interactivity</p>
+                    </div>
+
+                    <div class="skill-card">
+                        <div class="skill-icon responsive-icon">
+                            <!-- Use Lucide/Font Awesome for this one -->
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h4>Responsive Design</h4><p>Mobile friendly layouts</p>
+                    </div>
+
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <img src="https://cdn.simpleicons.org/git" alt="Git">
+                        </div>
+                        <h4>Git</h4><p>Version control</p>
+                    </div>
+
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <img src="vscode.png" alt="VS Code">
+                        </div>
+                        <h4>VS Code</h4><p>My workspace</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="section">
+            <div class="section-inner">
+                <p class="section-label"><i class="fa-solid fa-folder-open"></i> MY PROJECTS</p>
+                <h2 class="reveal-el">Some of My Work</h2>
+                <div class="projects-grid reveal-el">
+                    <div class="project-card">
+                        <div class="project-thumb thumb-coderoad">
+                            <div class="thumb-overlay">
+                                <span class="thumb-title">CodeRoad</span>
+                                <span class="thumb-tag">Learning Platform</span>
+                            </div>
+                        </div>
+                        <div class="project-body">
+                            <h3>CodeRoad</h3>
+                            <p>A developer learning platform that helps students learn coding through structured roadmaps, curated resources, hands-on practice, and real-world projects. Clear step-by-step path from basics to advanced development skills.</p>
+                            <div class="project-tags">
+                                <span>HTML</span><span>CSS</span><span>JavaScript</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="https://coderoad-beta.vercel.app/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+                                    <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 6px;"></i> Live Demo
+                                </a>
+                                <a href="https://github.com/Abhishek-Hallur" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
+                                    <i class="fa-brands fa-github" style="margin-right: 6px;"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="projects-note reveal-el">More projects coming soon — currently building in public.</p>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="section">
+            <div class="section-inner">
+                <p class="section-label"><i class="fa-solid fa-paper-plane"></i> GET IN TOUCH</p>
+                <div class="contact-grid">
+                    <div class="contact-left reveal-el">
+                        <h2>Let's Work Together</h2>
+                        <p>Have a project in mind or just want to say hi? Feel free to reach out. I'd love to hear from you!</p>
+                        <div class="contact-info">
+                            <div class="contact-info-item">
+                                <i class="fa-solid fa-envelope"></i>
+                                <a href="mailto:abhishekhallur78@gmail.com">abhishekhallur78@gmail.com</a>
+                            </div>
+                            <div class="contact-info-item">
+                                <i class="fa-brands fa-github"></i>
+                                <a href="https://github.com/Abhishek-Hallur" target="_blank" rel="noopener">github.com/Abhishek-Hallur</a>
+                            </div>
+                            <div class="contact-info-item">
+                                <i class="fa-brands fa-linkedin"></i>
+                                <a href="https://www.linkedin.com/in/abhishekhallur" target="_blank" rel="noopener">linkedin.com/in/abhishekhallur</a>
+                            </div>
+                            <div class="contact-info-item">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span>Based in India &mdash; Open to opportunities</span>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="contact-form reveal-el" id="contact-form" action="https://formspree.io/f/xqpanrql" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="f-name" name="name" placeholder=" " required>
+                                <label for="f-name">Name</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="f-email" name="email" placeholder=" " required>
+                                <label for="f-email">Email</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="f-message" name="message" placeholder=" " rows="5" required></textarea>
+                            <label for="f-message">Message</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Send Message
+                            <i class="fa-solid fa-paper-plane" style="margin-left: 8px;"></i>
+                        </button>
+                        <p id="form-msg" class="form-msg" aria-live="polite"></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+        <p class="footer-copy">&#169; 2025 Abhishek Hallur. All rights reserved.</p>
+        <div class="footer-socials">
+            <a href="https://github.com/Abhishek-Hallur" target="_blank" rel="noopener" aria-label="GitHub">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/abhishekhallur" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a href="mailto:abhishekhallur78@gmail.com" aria-label="Email">
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- External JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
